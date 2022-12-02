@@ -9,7 +9,7 @@ Tous issus de la formation développeur fullStack javaScript de chez O'Clock (5 
 * Cyrille : Lead Dev Front (front) - référent technique semantic UI
 * Antoine : Référent technique Git (front + back)- Scrum Master
 * Margaux: Product Owner - Lead Dev Back (back + front) - Reférent technique Sequelize
-### Projet
+## Projet
 Pendant 1 mois, nous avons travaillé sur ce projet, de la réalisation des wireframes au développement des premières fonctionnalités, en passant par la conception de la base de données.
 Le projet aujourd'hui disponible correspond à notre MVP (minimum viable product).
 La prochaine version de notre site sera bientôt disponible!
