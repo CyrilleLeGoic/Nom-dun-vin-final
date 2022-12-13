@@ -167,20 +167,3 @@ function CardList() {
 }
 
 export default React.memo(CardList);
-
-CardList.propTypes = {
-    wines: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            size: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired,
-            alcohol: PropTypes.number.isRequired,
-            price: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            avatar: PropTypes.string.isRequired,
-            winemaker: PropTypes.string.isRequired,
-            appellation: PropTypes.string.isRequired,
-            culture: PropTypes.string.isRequired,
-        }),
-    )
-};

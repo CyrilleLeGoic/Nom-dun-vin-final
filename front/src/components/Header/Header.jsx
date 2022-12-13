@@ -34,7 +34,7 @@ function Header() {
         removeToken();
         localStorage.removeItem('token');
         localStorage.removeItem('cart');
-        // localStorage.removeItem('remember-me');
+        localStorage.removeItem('remember-me');
         navigate('/');
         setIsOpen(false)
     }
