@@ -15,55 +15,62 @@ import "./filterMenu.scss";
 // component FilterMenu
 const FilterMenu = () => {
 
-    // * CREATE FILTER BY COLOR FOR FILTERMENU  * //
+    //* FILTER COLOR *//
+    // je rempli le state colorChecked avec les couleurs et ajoute une valeur a chaque couleur : false
+    const { colorChecked, setColorChecked } = useContext(AllWinesContext);
 
-    // Catch data from AllWinesContext
-    const { wines, checkboxColor, setCheckboxColor, handleChangeColor } = useContext(AllWinesContext);
-    // Map on wines for create array with all color
-    const colorList = wines.map((wine) => wine.color);
-    // set color in Set for delete duplicate (unique color)
-    const colors = [...new Set(colorList)];
-    // create object with color and boolean value for checkbox
-    const colorObject = colors.map((color) => ({ color, value: false }));
-    // Push object in checkboxColor state
+    // fonction pour changer la valeur de checked a true ou false
+    const handleColorChange = (e) => {
+        setColorChecked(colorChecked.map((color) => {
+            if (color.color === e.target.name) {
+                return { ...color, value: !color.value }
+            }
+            return color;
+        }))
+    }
+    
+    //* FILTER WINEMAKER *//
+    const { winemaker, winemakerChecked, setWinemakerChecked } = useContext(AllWinesContext);
 
-    // * CREATE FILTER BY WINEMAKER FOR FILTERMENU  * //
-
-    // Catch data from AllWinesContext
-    const { checkboxWinemaker, setCheckboxWinemaker, handleChangeWinemaker } = useContext(AllWinesContext);
-    // Map on wines for create array with all winemaker
-    const winemakerList = wines.map((wine) => wine.winemaker.name);
-    // set winemaker in Set for delete duplicate (unique winemaker)
-    const winemakers = [...new Set(winemakerList)];
-    // create object with winemaker and boolean value for checkbox
-    const winemakerObject = winemakers.map((winemaker) => ({ winemaker, value: false }));
-    // Push object in checkboxWinemaker state
-
-    // * CREATE FILTER BY REGION FOR FILTERMENU  * //
-
-    // Catch data from AllWinesContext
-    const { checkboxRegion, setCheckboxRegion, handleChangeRegion } = useContext(AllWinesContext);
-    // Map on wines for create array with all region
-    const regionList = wines.map((wine) => wine.region.name);
-    // set region in Set for delete duplicate (unique region)
-    const regions = [...new Set(regionList)];
-    // create object with region and boolean value for checkbox
-    const regionObject = regions.map((region) => ({ region, value: false }));
-    // Push object in checkboxRegion state
-
-    // * RESET FILTER *//
-    const { resetFilter } = useContext(AllWinesContext);
-
+    // Je rempli le state winemakerChecked avec les winemakers et ajoute une valeur a chaque winemaker : false 
     useEffect(() => {
-        setCheckboxRegion(regionObject);
-        setCheckboxColor(colorObject);
-        setCheckboxWinemaker(winemakerObject);
-    }, [wines]);
+        const winemakerChecked = winemaker.map((winemaker) => {
 
+            return { ...winemaker, value: false }
+        })
+        setWinemakerChecked(winemakerChecked);
+    }, [winemaker]);
 
+    // J'utilise une fonction pour changer la valeur de checked a true ou false si le nom du winemaker correspond au nom du checkbox
+    const handleWinemakerChange = (e) => {
+        setWinemakerChecked(winemakerChecked.map((winemaker) => {
+            if (winemaker.name === e.target.name) {
+                return { ...winemaker, value: !winemaker.value }
+            }
+            return winemaker;
+        }))
+    }
 
+    //* FILTER REGION *//
+    const { region, regionChecked, setRegionChecked } = useContext(AllWinesContext);
+
+    // remplir le state regionChecked avec les regions et ajouter une valeur a chaque region : false
+    useEffect(() => {
+        const regionChecked = region.map((region) => {
+            return { ...region, value: false }
+        })
+        setRegionChecked(regionChecked);
+    }, [region]);
+    // fonction pour changer la valeur de checked a true ou false
+    const handleRegionChange = (e) => {
+        setRegionChecked(regionChecked.map((region) => {
+            if (region.name === e.target.name) {
+                return { ...region, value: !region.value }
+            }
+            return region;
+        }))
+    }
     //* RETURN *//
-
     return (
         <Menu>
             <div className="menu-logo">
@@ -74,61 +81,63 @@ const FilterMenu = () => {
             </div>
 
             <form className="menu-item">
+                {colorChecked.map((color) => {
+                    return (
+                        <div className="menu-item-checkbox">
+                            <input type="checkbox"
+                                id={color.id}
+                                name={color.color}
+                                value={color.value}
+                                onChange={handleColorChange}
 
-                {checkboxColor.map((item) => (
-                    <div key={item.color} className="checkbox">
-                        <input
-                            type="checkbox"
-                            value={item.color}
-                            onChange={handleChangeColor}
-                            index={checkboxColor.indexOf(item)}
-                            checked={item.value}
+                            />
+                            <label htmlFor={color.id}>{color.color}</label>
+                        </div>
+                    )
+                }
+                )}
 
-                        />
-                        <label className="checkbox-title">Vin {item.color}</label>
-                    </div>
-                ))}
             </form>
 
             <div className="menu-title">
                 <h2>Un vigneron préféré ?</h2>
             </div>
-
             <form className="menu-item">
-                {checkboxWinemaker.map( item => (
-                    <div key={item.winemaker} className="checkbox">
-                        <input
-                            type="checkbox"
-                            value={item.winemaker}
-                            onChange={handleChangeWinemaker}
-                            index={checkboxWinemaker.indexOf(item)}
-                            checked={item.value}
-                        />
-                        <label className="checkbox-title">{item.winemaker}</label>
-                    </div>
-                ))}
+                {winemakerChecked.map((winemaker) => {
+                    return (
+                        <div className="menu-item-checkbox">
+                            <input type="checkbox"
+                                id={winemaker.id}
+                                name={winemaker.name}
+                                value={winemaker.value}
+                                onChange={handleWinemakerChange}
+                            />
+                            <label htmlFor={winemaker.id}>{winemaker.name}</label>
+                        </div>
+                    )
+                }
+                )}
             </form>
-
             <div className="menu-title">
                 <h2>Une région particulière ?</h2>
             </div>
-
             <form className="menu-item">
-                {checkboxRegion.map((item) => (
-                    <div key={item.region} className="checkbox">
-                        <input
-                            type="checkbox"
-                            value={item.region}
-                            onChange={handleChangeRegion}
-                            index={checkboxRegion.indexOf(item)}
-                            checked={item.value}
-                        />
-                        <label className="checkbox-title">{item.region}</label>
-                    </div>
-                ))}
-
+                {regionChecked.map((region) => {
+                    return (
+                        <div className="menu-item-checkbox">
+                            <input type="checkbox"
+                                id={region.id}
+                                name={region.name}
+                                value={region.value}
+                                onChange={handleRegionChange}
+                            />
+                            <label htmlFor={region.id}>{region.name}</label>
+                        </div>
+                    )
+                }
+                )}
             </form>
-            <button onClick={resetFilter} className="menu-button-reset">Réinitialiser mes choix</button>
+            <button className="menu-button-reset">Réinitialiser mes choix</button>
         </Menu>
     );
 };

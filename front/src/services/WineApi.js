@@ -1,18 +1,13 @@
 //import axios
-import axios from "axios";
+
 import apiInstance from "./instance";
-
-
-const baseURL = 'http://vps-e69e82f5.vps.ovh.net/:8080'
 
 
 //* Request Api for catch All Wines : * //
 export async function fetchAllWines() {
     try {
-        const [wine] = await Promise.all ([
-        axios.get(baseURL),
-        ]);
-        const dataWines = [wine];
+        const dataWines = await apiInstance.get()
+        
         return dataWines; 
 
 } catch (error) {
@@ -25,12 +20,12 @@ export async function filterWines() {
     try {
         const [culture, region, winemaker, style, grapevariety, dish] = await Promise.all ([
 
-        axios.get(`${baseURL}/culture`),
-        axios.get(`${baseURL}/region`),
-        axios.get(`${baseURL}/winemaker`),
-        axios.get(`${baseURL}/style`),
-        axios.get(`${baseURL}/grapevariety`),
-        axios.get(`${baseURL}/dish`)
+            apiInstance.get(`/culture`),
+            apiInstance.get(`/region`),
+            apiInstance.get(`/winemaker`),
+            apiInstance.get(`/style`),
+            apiInstance.get(`/grapevariety`),
+            apiInstance.get(`/dish`)
        
         ]);
 
@@ -44,7 +39,7 @@ export async function filterWines() {
 
 //* Request Api for catch One Wine : *//
 export async function fetchOneWine(id) {
-    const response = await axios.get(`${baseURL}/wine/${id}`);
+    const response = await apiInstance.get(`/wine/${id}`);
     return response.data;
 }
 
@@ -83,7 +78,6 @@ export async function makeOrder(order) {
     const response = await apiInstance.post('/cart/validate', {cart: order});
     return response.data
 }
-
 
 
 
