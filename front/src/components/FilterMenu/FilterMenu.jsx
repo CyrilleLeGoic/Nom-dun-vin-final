@@ -28,7 +28,7 @@ const FilterMenu = () => {
             return color;
         }))
     }
-    
+
     //* FILTER WINEMAKER *//
     const { winemaker, winemakerChecked, setWinemakerChecked } = useContext(AllWinesContext);
 
@@ -70,6 +70,32 @@ const FilterMenu = () => {
             return region;
         }))
     }
+
+    //* BOUTON RESET FILTER *//
+
+
+    const handleResetFilter = () => {
+    // je remet a false toutes les valeurs de colorChecked et je decoche toutes les checkbox
+        setColorChecked(colorChecked.map((color) => {
+            return { ...color, value: false, checked: false }
+
+        }))
+        // je remet a false toutes les valeurs de winemakerChecked et je decoche toutes les checkbox
+        setWinemakerChecked(winemakerChecked.map((winemaker) => {
+            return { ...winemaker, value: false }
+        }))
+        // je remet a false toutes les valeurs de regionChecked et je decoche toutes les checkbox
+        setRegionChecked(regionChecked.map((region) => {
+            return { ...region, value: false, checked: false }
+        }))
+    }
+
+
+
+
+
+
+
     //* RETURN *//
     return (
         <Menu>
@@ -89,6 +115,7 @@ const FilterMenu = () => {
                                 name={color.color}
                                 value={color.value}
                                 onChange={handleColorChange}
+                                checked ={color.value}
 
                             />
                             <label htmlFor={color.id}>{color.color}</label>
@@ -111,6 +138,7 @@ const FilterMenu = () => {
                                 name={winemaker.name}
                                 value={winemaker.value}
                                 onChange={handleWinemakerChange}
+                                checked={winemaker.value}
                             />
                             <label htmlFor={winemaker.id}>{winemaker.name}</label>
                         </div>
@@ -130,6 +158,7 @@ const FilterMenu = () => {
                                 name={region.name}
                                 value={region.value}
                                 onChange={handleRegionChange}
+                                checked={region.value}
                             />
                             <label htmlFor={region.id}>{region.name}</label>
                         </div>
@@ -137,9 +166,10 @@ const FilterMenu = () => {
                 }
                 )}
             </form>
-            <button className="menu-button-reset">Réinitialiser mes choix</button>
+            <button onClick={handleResetFilter} className="menu-button-reset">Réinitialiser mes choix</button>
         </Menu>
     );
 };
 
 export default FilterMenu;
+
