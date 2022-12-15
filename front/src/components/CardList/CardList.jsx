@@ -1,7 +1,7 @@
 //import PropTypes
 import PropTypes from 'prop-types';
 //import react
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import components
 import Card from '../Card/Card';
@@ -12,6 +12,7 @@ import { AllWinesContext } from '../../Context/AllWinesContext';
 import { Segment, Input, Form } from 'semantic-ui-react';
 //import css
 import './cardList.scss';
+import { filterWines } from '../../services/WineApi';
 
 
 function CardList() {
@@ -59,67 +60,63 @@ function CardList() {
     const getFilteredWine = () => wines.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
     let filteredWines = getFilteredWine();
 
-    //* USE CONTEXT FOR FILTERS BY COLOR *//
-    const { checkboxColor } = useContext(AllWinesContext);
 
-    // filter for wines, loop on checkboxColor and return wines with checked value
-    const filteredMenu = filteredWines.filter((wine) => {
-        // use loop for check if checkbox is checked
-        for (let i = 0; i < checkboxColor.length; i++) {
-            // if checkbox is checked return wines with color checked
-            if (checkboxColor[i].value === true && wine.color === checkboxColor[i].color) {
-                // return filtered wines
-                return wine;
-            }
-        }
-    });
-    // if checkbox is checked return filteredWines = filteredMenu
-    for (let i = 0; i < checkboxColor.length; i++) {
-        if (checkboxColor[i].value === true) {
-            filteredWines = filteredMenu;
-        }
-    }
+    //* filter for winemaker *//
 
     // *  USE CONTEXT FOR FILTERS BY WINEMAKERS *//
-    const { checkboxWinemaker } = useContext(AllWinesContext);
-    // filter for wines, loop on checkboxWinemaker and return wines with checked value  
+    // Je recupere le state winemakerChecked du context
+    const { winemakerChecked } = useContext(AllWinesContext);
+  // Je filtre les vins en fonction des checkbox cochées et je retourne les vins qui ont le même nom que le checkbox cochée  
     const filteredMenuWinemaker = filteredWines.filter((wine) => {
-        // use loop for check if checkbox is checked
-        for (let i = 0; i < checkboxWinemaker.length; i++) {
-            // if checkbox is checked return wines with winemaker checked
-            if (checkboxWinemaker[i].value === true && wine.winemaker.name === checkboxWinemaker[i].winemaker) {
-                // return filtered wines
+       // j'utilise une boucle pour verifier si la checkbox est cochée 
+        for (let i = 0; i < winemakerChecked.length; i++) {
+            // si la checkbox est cochée et que le nom du winemaker correspond au nom du checkbox alors je retourne le vin
+            if (winemakerChecked[i].value === true && wine.winemaker.name === winemakerChecked[i].name) {
                 return wine;
             }
         }
     });
-    // if checkbox is checked return filteredWines = filteredMenuWinemaker
-    for (let i = 0; i < checkboxWinemaker.length; i++) {
-        if (checkboxWinemaker[i].value === true) {
+    // si la checkbox est cochée alors je retourne filteredWines = filteredMenuWinemaker
+    for (let i = 0; i < winemakerChecked.length; i++) {
+        if (winemakerChecked[i].value === true) {
             filteredWines = filteredMenuWinemaker;
         }
     }
 
-    // * USE CONTEXT FOR FILTERS BY REGION *//
-    const { checkboxRegion } = useContext(AllWinesContext);
-    // filter for wines, loop on checkboxRegion and return wines with checked value
-    const filteredMenuRegion = filteredWines.filter( wine => {
-        // use loop for check if checkbox is checked
-        for (let i = 0; i < checkboxRegion.length; i++) {
-            // if checkbox is checked return wines with region checked
-            if (checkboxRegion[i].value === true && wine.region.name === checkboxRegion[i].region) {
-                // return filtered wines
+    //* filter for region *//
+    const  { regionChecked } = useContext(AllWinesContext);
+    const filteredMenuRegion = filteredWines.filter((wine) => {
+        for (let i = 0; i < regionChecked.length; i++) {
+            if (regionChecked[i].value === true && wine.region.name === regionChecked[i].name) {
+                return wine;
+            }
+        }
+    });
+    for (let i = 0; i < regionChecked.length; i++) {
+        if (regionChecked[i].value === true) {
+            filteredWines = filteredMenuRegion;
+        }
+    }
+
+
+
+    //* filter for color *//
+    const { colorChecked } = useContext(AllWinesContext);
+    console.log("colorchecked", colorChecked)
+    const filteredMenuColor = filteredWines.filter((wine) => {
+        for (let i = 0; i < colorChecked.length; i++) {
+            if (colorChecked[i].value === true && wine.color === colorChecked[i].color) {
                 return wine;
             }
         }
     });
 
-    // if checkbox is checked return filteredWines = filteredMenuRegion
-    for (let i = 0; i < checkboxRegion.length; i++) {
-        if (checkboxRegion[i].value === true) {
-            filteredWines = filteredMenuRegion;
+    for (let i = 0; i < colorChecked.length; i++) {
+        if (colorChecked[i].value === true) {
+            filteredWines = filteredMenuColor;
         }
     }
+
 
     return (
 

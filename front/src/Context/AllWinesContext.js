@@ -6,20 +6,19 @@ import { fetchAllWines, filterWines } from '../services/WineApi.js';
 export const AllWinesContext = createContext();
 // Create Provider for Share informations between components
 export const AllWinesProvider = ({ children }) => {
-  
+
     // Create state for allWines
     const [wines, setWines] = useState([]);
- 
+
     const fetchWines = async () => {
         const response = await fetchAllWines();
-        setWines(response[0].data);
+        setWines(response.data);
     }
     // useEffect for fetch data from API
     useEffect(() => { fetchWines() }, []);
 
     //STATE CULTURE
     const [culture, setCulture] = useState([]);
-
     //STATE REGION
     const [region, setRegion] = useState([]);
     //STATE WINEMAKER
@@ -28,7 +27,7 @@ export const AllWinesProvider = ({ children }) => {
     const [grapevariety, setGrapeVariety] = useState([]);
     // STATE DISH
     const [dish, setDish] = useState([]);
-    
+
     const fecthFiltersWines = async () => {
         const response = await filterWines();
         setCulture(response[0].data);
@@ -39,57 +38,30 @@ export const AllWinesProvider = ({ children }) => {
     }
     useEffect(() => { fecthFiltersWines() }, []);
 
-    // * FILTER BY COLOR *//
 
-    // Create state for checkboxColor - For FilterMenu component
-    const [checkboxColor, setCheckboxColor] = useState([]);
 
-    // Create function handleChange for change value of checkboxColor with index
-    const handleChangeColor = (e) => {
-        const index = e.target.getAttribute('index');
-        const newCheckbox = [...checkboxColor];
-        newCheckbox[index].value = e.target.checked;
-        setCheckboxColor(newCheckbox);
-    }
+    const [colorChecked, setColorChecked] = useState(
 
-    // * FILTER BY WINEMAKER *//
-    
-    // Create state for checkboxWinemaker - For FilterMenu component
-    const [checkboxWinemaker, setCheckboxWinemaker] = useState([]);
+        [{
+            color: "rouge", value: false
+        }, {
+            color: "blanc", value: false
+        }, {
+            color: "rosé", value: false
+        }]
+    )
 
-    // Create function handleChange for change value of checkboxWinemaker with index
-    const handleChangeWinemaker = (e) => {
-        const index = e.target.getAttribute('index');
-        const newCheckbox = [...checkboxWinemaker];
-        newCheckbox[index].value = e.target.checked;
-        setCheckboxWinemaker(newCheckbox);
-    }
+    // checkbox winemaker state 
+    const [winemakerChecked, setWinemakerChecked] = useState([]);
+    // checkbox region state 
+    const [regionChecked, setRegionChecked] = useState([]);
 
-    // * FILTER BY REGION *//
-    // Create state for checkboxRegion - For FilterMenu component
-    const [checkboxRegion, setCheckboxRegion] = useState([]);
-   
-    // Create function handleChange for change value of checkboxRegion with index
-    const handleChangeRegion = (e) => {
-        const index = e.target.getAttribute('index');
-        const newCheckbox = [...checkboxRegion];
-        newCheckbox[index].value = e.target.checked;
-        setCheckboxRegion(newCheckbox);
-    }
 
-    // * RESET FILTER *//
-    // Create function for reset all filter
-    const resetFilter = () => {
-        setCheckboxColor(checkboxColor.map((color) => ({ ...color, value: false })));
-        setCheckboxWinemaker(checkboxWinemaker.map((winemaker) => ({ ...winemaker, value: false })));
-        setCheckboxRegion(checkboxRegion.map((region) => ({ ...region, value: false })));
-    }
 
     // Create function for choose and share informations between components
     return (
-        <AllWinesContext.Provider value={{ winemaker, grapevariety, dish, region, culture,fetchWines, wines, setWines, checkboxColor, setCheckboxColor, handleChangeColor, checkboxWinemaker, setCheckboxWinemaker, handleChangeWinemaker, checkboxRegion, setCheckboxRegion, handleChangeRegion, resetFilter}}>
+        <AllWinesContext.Provider value={{ winemaker, grapevariety, dish, region, culture, fetchWines, wines, setWines, winemakerChecked, setWinemakerChecked, regionChecked, setRegionChecked, colorChecked, setColorChecked }}>
             {children}
         </AllWinesContext.Provider>
     );
 }
-
