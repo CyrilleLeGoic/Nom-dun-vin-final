@@ -55,17 +55,17 @@ function FormAddWine() {
     const uniqSize = [...new Set(wines.map((wine) => wine.size))];
 
     const wine = {
-        name: adminState.name,
+        name: adminState.name.trim(),
         appellation: adminState.appellation,
         color: adminState.color,
-        description: adminState.description,
+        description: adminState.description.trim(),
         winemaker_id: adminState.winemaker,
         region_id: adminState.region,
-        size: adminState.size,
-        vintage: adminState.vintage,
-        alcohol: adminState.alcool,
+        size: adminState.size.trim(),
+        vintage: Number(adminState.vintage),
+        alcohol: Number(adminState.alcool),
         avatar: adminState.avatar,
-        price: adminState.price
+        price: Number(adminState.price)
     }
 
     // we catch all tags in the adminState

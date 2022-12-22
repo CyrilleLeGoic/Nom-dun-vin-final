@@ -48,36 +48,36 @@ const userController = {
 			const hashedPassword = bcrypt.hashSync(escape(password), 10); 
 
 			//5. Check that firstname and lastname exist
-			if(!firstname){
-				throw new Error('Signup does not work, invalid email or password');
+			if(!firstname || firstname.trim() === ''){
+				throw new Error('"firstname" property is missing');
 			}
 
-			if(!lastname){
-				throw new Error('Signup does not work, invalid email or password');
+			if(!lastname || lastname.trim() === ''){
+				throw new Error('lastname" property is missing');
 			}
 
 			//6. Create an instance, save it in the database
 			const newUser = User.build({
 				email : escape(email),
 				password : hashedPassword,
-				firstname : escape(firstname), 
-				lastname : escape(lastname)
+				firstname : escape(firstname.trim()), 
+				lastname : escape(lastname.trim())
 			}); 
 
-			if(address_number){
+			if(Number(address_number)){
 				newUser.address_number = Number(escape(address_number));
 			}
 
-			if(address_street){
-				newUser.address_street = escape(address_street);
+			if(address_street && address_street.trim() !== ''){
+				newUser.address_street = escape(address_street.trim());
 			}
 
-			if(address_postal){
-				newUser.address_postal = escape(address_postal);
+			if(address_postal && address_postal.trim() !== ''){
+				newUser.address_postal = escape(address_postal.trim());
 			}
 
-			if(address_city){
-				newUser.address_city = escape(address_city);
+			if(address_city && address_city.trim() !== ''){
+				newUser.address_city = escape(address_city.trim());
 			}
 
 			await newUser.save(); 
@@ -85,7 +85,7 @@ const userController = {
 
 		} catch (error) {
 			console.log(error); 
-			res.status(401).json({ message: error.message }); 
+			res.status(500).json({ message: error.message }); 
 		}
 	}, 
 
@@ -168,4 +168,4 @@ const userController = {
 	}
 };
 
-module.exports = userController; 
+module.exports = userController;

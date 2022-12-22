@@ -21,23 +21,23 @@ const adminController = {
     
 			const { name, description, appellation, size, price, alcohol, vintage, color, avatar, region_id, winemaker_id} = req.body;
     
-			if (!name) {
+			if (!name || name.trim() === '') {
 				const error = new Error('"name" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
-			if (!description) {
+			if (!description || description.trim() === '') {
 				const error = new Error('"description" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
-			if (!appellation) {
+			if (!appellation || appellation.trim() === '') {
 				const error = new Error('"appellation" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
-			if (!size) {
+			if (!size || size.trim() === '') {
 				const error = new Error('"size" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
-			if (!color) {
+			if (!color || color.trim() === '') {
 				const error = new Error('"color" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
@@ -53,7 +53,7 @@ const adminController = {
 				const error = new Error('"vintage" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
-			if (!avatar) {
+			if (!avatar || avatar.trim() === '') {
 				const error = new Error('"avatar" property is missing');
 				return res.status(400).json({ message: error.message });
 			}
@@ -67,15 +67,15 @@ const adminController = {
 			}
     
 			const newWine = Wine.build({
-				name : escape(name), 
-				description : escape(description), 
+				name : escape(name.trim()), 
+				description : escape(description.trim()), 
 				appellation,
 				size, 
 				price : escape(price),
 				alcohol: escape(alcohol), 
 				vintage : escape(vintage), 
-				color, 
-				avatar, 
+				color : color.trim(),  
+				avatar : avatar.trim(), 
 				region_id, 
 				winemaker_id
 			});
@@ -115,13 +115,13 @@ const adminController = {
 				return res.status(404).json({ message: error.message });
 			}
     
-			if (name) {
+			if (name || name.trim() === '') {
 				wine.name = escape(name);
 			}
-			if (description) {
+			if (description || description.trim() === '') {
 				wine.description = escape(description); 
 			}
-			if (appellation) {
+			if (appellation || appellation.trim() === '') {
 				wine.appellation = appellation;
 			}
 			if (size) {
@@ -133,7 +133,7 @@ const adminController = {
 			if (price) {
 				wine.price = escape(price);  
 			}
-			if (alcohol) {
+			if (Number(alcohol)) {
 				wine.alcohol = escape(alcohol);  
 			}
 			if (vintage) {
