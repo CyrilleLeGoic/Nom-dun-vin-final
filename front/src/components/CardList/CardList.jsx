@@ -121,7 +121,6 @@ function CardList() {
 
     //* filter for color *//
     const { colorChecked } = useContext(AllWinesContext);
-    console.log("colorchecked", colorChecked)
     const filteredMenuColor = filteredWines.filter((wine) => {
         for (let i = 0; i < colorChecked.length; i++) {
             if (colorChecked[i].value === true && wine.color === colorChecked[i].color) {
