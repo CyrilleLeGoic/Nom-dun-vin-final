@@ -411,10 +411,10 @@ export default FormAddWine;
 
 
 
-
-
-
-
+// c'est quoi un jeu d'essai ? c'est  un fichier de test ? 
+// une jeu d'essai est un ensemble de données qui permet de tester un programme informatique.
+// pour le réaliser il faut préparer un ensemble de données qui permettent de tester le programme.
+// il ya des outils qui permettent de générer des jeux d'essai comme JEST
 
 
 

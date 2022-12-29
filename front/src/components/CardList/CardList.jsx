@@ -1,5 +1,5 @@
-//import PropTypes
-import PropTypes from 'prop-types';
+/* eslint-disable array-callback-return */
+
 //import react
 import React, { useState, Fragment, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,17 +8,28 @@ import Card from '../Card/Card';
 import LandpageModal from '../LandpageModal/LandpageModal';
 //import context
 import { AllWinesContext } from '../../Context/AllWinesContext';
+// import services
+import { fetchAllWines } from '../../services/WineApi.js';
+
 //import semantic UI Elements
 import { Segment, Input, Form } from 'semantic-ui-react';
 //import css
 import './cardList.scss';
-import { filterWines } from '../../services/WineApi';
+
 
 
 function CardList() {
 
-    //* STATE FOR CARDLIST *//
-    const { wines } = useContext(AllWinesContext);
+        // Create state for allWines
+        const [wines, setWines] = useState([]);
+
+        const fetchWines = async () => {
+            const response = await fetchAllWines();
+            setWines(response.data);
+        }
+        // useEffect for fetch data from API
+        useEffect(() => { fetchWines() }, []);
+
 
      //* MODAL LANDING PAGE *//
     const [isLandpageModalOpen, setIsLangpageModalOpen] = useState(true);
@@ -42,6 +53,7 @@ function CardList() {
 
     // * NAVIGATE TO DETAILS PAGE * //
     const navigate = useNavigate();
+    
     // Route to details page
     const handleClick = (e) => {
         e.preventDefault();
@@ -50,15 +62,18 @@ function CardList() {
     }
 
     //* SEARCHBAR *//
-    const [search, setSearch] = useState('');
 
+    // State for searchbar
+    const [search, setSearch] = useState('');
+    // This function catch the value of the searchbar in the state search
     const handleSearch = (e) => {
         setSearch(e.target.value);
     }
 
-    // Filter for wines
+    // This function filter the wines by name
     const getFilteredWine = () => wines.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()));
     let filteredWines = getFilteredWine();
+
 
 
     //* filter for winemaker *//
@@ -76,7 +91,9 @@ function CardList() {
             }
         }
     });
-    // si la checkbox est cochée alors je retourne filteredWines = filteredMenuWinemaker
+
+
+// maintenant j'utilise un for pour parcourir 
     for (let i = 0; i < winemakerChecked.length; i++) {
         if (winemakerChecked[i].value === true) {
             filteredWines = filteredMenuWinemaker;
@@ -92,11 +109,13 @@ function CardList() {
             }
         }
     });
+// 
     for (let i = 0; i < regionChecked.length; i++) {
         if (regionChecked[i].value === true) {
             filteredWines = filteredMenuRegion;
         }
     }
+
 
 
 
@@ -155,7 +174,7 @@ function CardList() {
                         appellation={appellation}
                         img={avatar}
                         id={id}
-                        handleClick={handleClick}
+                        onClick={handleClick}
                     />
                 ))}
             </div>
