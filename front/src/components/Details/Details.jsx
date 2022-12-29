@@ -4,7 +4,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 //import components
 import Loading from '../Loading/Loading';
-// import request methods
+// import request
 import { fetchOneWine } from '../../services/WineApi.js';
 import { addWineToCart } from '../../utils';
 //import context 
@@ -40,9 +40,7 @@ function Details() {
 
     //handle loading component to avoid display problem 
     useEffect(() => {
-        // if loading set isLoading to true
-        setIsLoadingWine(true);
-        // requete with fetchOneWine
+  
         fetchOneWine(id)
             // if response ok set wine to response and isLoading to false
             .then((response) => {
@@ -60,12 +58,7 @@ function Details() {
     if (isLoadingWine) {
         return <Loading />
     }
-    // if isLoadingWine is false we display details of wine
-    if (!isLoadingWine && null === wine) {
-        // else we display error page 404
-        navigate('/not-found');
-        return null;
-    }
+
 
     return (
         <div className="details">

@@ -24,7 +24,7 @@ function Card({
     culture,
     appellation,
     img,
-    handleClick,
+    onClick,
 }) {
 
     const [isAddWineToCartModalOpen, setIsAddWineToCartModalOpen] = useState(false);
@@ -93,7 +93,7 @@ function Card({
                     </div>
                 }
                 <div className="card-price">
-                    <button className="price-btn" id={id} onClick={handleClick}>Voir le produit</button>
+                    <button className="price-btn" id={id} onClick={onClick}>Voir le produit</button>
                     <p className='price'>{price} € <span> T.T.C </span></p>
                 </div>
             </div>

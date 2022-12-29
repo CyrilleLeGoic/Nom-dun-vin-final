@@ -54,7 +54,7 @@ const FilterMenu = () => {
     //* FILTER REGION *//
     const { region, regionChecked, setRegionChecked } = useContext(AllWinesContext);
 
-    // remplir le state regionChecked avec les regions et ajouter une valeur a chaque region : false
+    
     useEffect(() => {
         const regionChecked = region.map((region) => {
             return { ...region, value: false }
@@ -75,7 +75,7 @@ const FilterMenu = () => {
 
 
     const handleResetFilter = () => {
-    // je remet a false toutes les valeurs de colorChecked et je decoche toutes les checkbox
+        // je remet a false toutes les valeurs de colorChecked et je decoche toutes les checkbox
         setColorChecked(colorChecked.map((color) => {
             return { ...color, value: false, checked: false }
 
@@ -109,14 +109,11 @@ const FilterMenu = () => {
             <form className="menu-item">
                 {colorChecked.map((color) => {
                     return (
-                        <div className="menu-item-checkbox">
+                        <div className="menu-item-checkbox" key={color.color}>
                             <input type="checkbox"
-                                id={color.id}
                                 name={color.color}
-                                value={color.value}
                                 onChange={handleColorChange}
-                                checked ={color.value}
-
+                                checked = {color.value}
                             />
                             <label htmlFor={color.id}>{color.color}</label>
                         </div>
@@ -132,15 +129,13 @@ const FilterMenu = () => {
             <form className="menu-item">
                 {winemakerChecked.map((winemaker) => {
                     return (
-                        <div className="menu-item-checkbox">
+                        <div className="menu-item-checkbox" key={winemaker.id}>
                             <input type="checkbox"
-                                id={winemaker.id}
                                 name={winemaker.name}
-                                value={winemaker.value}
                                 onChange={handleWinemakerChange}
                                 checked={winemaker.value}
                             />
-                            <label htmlFor={winemaker.id}>{winemaker.name}</label>
+                            <label>{winemaker.name}</label>
                         </div>
                     )
                 }
@@ -152,11 +147,9 @@ const FilterMenu = () => {
             <form className="menu-item">
                 {regionChecked.map((region) => {
                     return (
-                        <div className="menu-item-checkbox">
+                        <div className="menu-item-checkbox" key={region.id}>
                             <input type="checkbox"
-                                id={region.id}
                                 name={region.name}
-                                value={region.value}
                                 onChange={handleRegionChange}
                                 checked={region.value}
                             />
