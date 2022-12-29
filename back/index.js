@@ -3,7 +3,9 @@ const cors = require('cors');
 const express = require('express'); 
 
 const app = express(); 
-app.use(cors());
+//déclarer l'adresse de mon site dans cors 
+app.use(cors({origin: 'http://vps-e69e82f5.vps.ovh.net'}));
+
 const PORT = process.env.PORT || 3000; 
 
 const router = require('./app/router'); 
