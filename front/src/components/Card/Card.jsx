@@ -116,7 +116,7 @@ Card.propTypes = {
     culture: PropTypes.array.isRequired,
     appellation: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
-    handleClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
 };
 
 
