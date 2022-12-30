@@ -1,9 +1,8 @@
 // import from react
 import { createContext, useState, useEffect } from 'react';
 // import services
-import { filterWines } from '../services/WineApi.js';
-// import services
 import { fetchAllWines, filterWines } from '../services/WineApi.js';
+
 // Create context
 export const AllWinesContext = createContext();
 // Create Provider for Share informations between components
