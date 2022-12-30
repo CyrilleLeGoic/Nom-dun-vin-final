@@ -13,8 +13,10 @@ export const AllWinesProvider = ({ children }) => {
  
         const fetchWines = async () => {
             const response = await fetchAllWines();
-            setWines(response[0].data);
+            setWines(response.data);
+         
         }
+        console.log(wines)
         // useEffect for fetch data from API
         useEffect(() => { fetchWines() }, []);
 
