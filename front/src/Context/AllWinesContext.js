@@ -2,10 +2,22 @@
 import { createContext, useState, useEffect } from 'react';
 // import services
 import { filterWines } from '../services/WineApi.js';
+// import services
+import { fetchAllWines, filterWines } from '../services/WineApi.js';
 // Create context
 export const AllWinesContext = createContext();
 // Create Provider for Share informations between components
 export const AllWinesProvider = ({ children }) => {
+
+        // Create state for allWines
+        const [wines, setWines] = useState([]);
+ 
+        const fetchWines = async () => {
+            const response = await fetchAllWines();
+            setWines(response[0].data);
+        }
+        // useEffect for fetch data from API
+        useEffect(() => { fetchWines() }, []);
 
 
     //STATE CULTURE
@@ -51,7 +63,7 @@ export const AllWinesProvider = ({ children }) => {
 
     // Create function for choose and share informations between components
     return (
-        <AllWinesContext.Provider value={{ winemaker, grapevariety, dish, region, culture, winemakerChecked, setWinemakerChecked, regionChecked, setRegionChecked, colorChecked, setColorChecked }}>
+        <AllWinesContext.Provider value={{ winemaker, wines, grapevariety, dish, region, culture, winemakerChecked, setWinemakerChecked, regionChecked, setRegionChecked, colorChecked, setColorChecked }}>
             {children}
         </AllWinesContext.Provider>
     );
