@@ -1,6 +1,6 @@
 # Bienvenue sur ce super projet Nom d'un Vin !
 # Nom d'un Vin !
-Vous aimez le vin :verre_de_vin: … mais vous n’y connaissez rien ? Vous ne savez pas quel vin choisir ? Pas de panique ! Avec Nom d’un vin! vous trouverez la bouteille idéale à coup sûr ! :clin_d'œil:
+Vous aimez le vin mais vous n’y connaissez rien ? Vous ne savez pas quel vin choisir ? Pas de panique ! Avec Nom d’un vin! vous trouverez la bouteille idéale à coup sûr ! :clin_d'œil:
 Nom d’un vin! est un site de vente en ligne de vins, simple d’utilisation, qui dépoussière le monde du vin (pas de chichi entre nous !).
 Grâce à ce site, vous pourrez rechercher un vin selon vos goûts, une occasion ou encore votre budget.
 ## Projet
